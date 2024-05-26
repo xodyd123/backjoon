@@ -5,28 +5,28 @@ import java.util.*;
 public class Main {
 
 
-     final static  int[] N = {-1, 1, 0 , 0};
-     final static  int[] M = {0, 0, 1, -1};
+    final static  int[] N = {-1, 1, 0 , 0};
+    final static  int[] M = {0, 0, 1, -1};
 
 
-     static int[][] map ;
+    static int[][] map ;
 
-     static int[][] dict ;
+    static int[][] dict ;
 
-     static boolean[][] visit ;
+    static boolean[][] visit ;
 
-     static int m;
-     static int n;
-     
+    static int m;
+    static int n;
 
-     static ArrayDeque<Node> deque = new ArrayDeque<>();
+
+    static ArrayDeque<Node> deque = new ArrayDeque<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         StringBuilder sb = new StringBuilder();
         m = Integer.parseInt(st.nextToken());
-         n = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
         map = new int[n][m];
         visit = new boolean[n][m];
         for (int i = 0; i < n; i++) {
@@ -85,7 +85,7 @@ public class Main {
                 if (map[y_range][x_range] == -1) {
                     continue;
                 }
-                if (map[y_range][x_range] == 0 && (dict[y_range][x_range] == 0 || dict[y_range][x_range] == -1 )) {
+                if (map[y_range][x_range] == 0 &&  dict[y_range][x_range] == -1 ) {
                     dict[y_range][x_range] = dict[node.y][node.x]+1;
                     deque.add(new Node(x_range , y_range));
 
@@ -95,8 +95,8 @@ public class Main {
             }
         }
     }
-    
-    
+
+
     static class Node {
         int x ;
         int y ;
