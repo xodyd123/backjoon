@@ -78,13 +78,10 @@ public class Main {
                 int x_range = node.x + N[i];
                 int y_range = node.y + M[i];
 
-                if (x_range < 0 || y_range < 0 || x_range >= m || y_range >= n) {
+                if (x_range < 0 || y_range < 0 || x_range >= m || y_range >= n || map[y_range][x_range] == -1 ) {
                     continue;
                 }
 
-                if (map[y_range][x_range] == -1) {
-                    continue;
-                }
                 if (map[y_range][x_range] == 0 &&  dict[y_range][x_range] == -1 ) {
                     dict[y_range][x_range] = dict[node.y][node.x]+1;
                     deque.add(new Node(x_range , y_range));
