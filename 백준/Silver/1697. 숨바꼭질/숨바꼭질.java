@@ -2,59 +2,55 @@ import java.io.*;
 import java.util.*;
 
 
-public class Main  {
-
-    static final int[] N = {-1, 1, 2};
+public class Main {
 
 
+    final static  int[] N = {-1, 1,2};
 
+    static ArrayDeque<Integer> deque = new ArrayDeque<>();
 
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
         int subin = Integer.parseInt(st.nextToken());
         int bro = Integer.parseInt(st.nextToken());
 
-        int[] dict = new int[100000 + 1];
-        for (int i = 0; i < dict.length; i++) {
-            dict[i] = -1 ;
-        }
-        boolean[] booleans = new boolean[100000 + 1];
-        dict[subin] = 0 ; //0초
-        booleans[subin] = true ;
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        int[] dict = new int[100000+1];
+        // 0
         deque.add(subin);
-        int result =  0;
-        while (!deque.isEmpty() ) {
-            Integer next = deque.poll();
-            for (int i = 0; i < 3; i++) {
-                int range;
-                if (i == 2) {
-                    range = next *N[2];
-                }
-                else {
-                    range = next +N[i];
-                }
-                if(range<0|| range >100000){
-                    continue;
-                }
+        while (!deque.isEmpty()) {
+            Integer poll = deque.poll();
+            if(poll == bro){
+                break;
+            }
+            else {
+                for (int i = 0; i < 3; i++) {
+                    int after  = poll ;
+                    if (i == 2) {
+                        after *= N[i];
+                    }
+                    else {
+                        after += N[i];
+                    }
+                    if (after < 0 || after > 100000 || dict[after] != 0) {
+                        continue;
+                    }
 
-                if (dict[range] == -1) {
-                    dict[range] = dict[next] + 1;
-                    deque.add(range);
-                }
-
-                if(range == bro){
-                    result = dict[range];
-                    //  System.out.println(range);
+                    if (dict[after] == 0) {
+                        dict[after] = dict[poll] + 1;
+                        deque.add(after);
+                    }
                 }
             }
-
         }
-        System.out.println(result);
 
+        System.out.println(dict[bro]);
+        
 
     }
 
+
 }
+
