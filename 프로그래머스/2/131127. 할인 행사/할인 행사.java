@@ -13,9 +13,9 @@ class Solution {
         int count = 0 ;
             while(range<=discount.length){
             Map<String, Integer>compareItem  = new HashMap<>();
-            Set<String> itemKey = Item.keySet();
+        
             for(int j = i; j<range ; j++){
-                if (!itemKey.contains(discount[j])) {
+                if (!Item.containsKey(discount[j])) {
                     break;
                 }
                 compareItem.put(discount[j] , compareItem.getOrDefault(discount[j] , 0)+1);
