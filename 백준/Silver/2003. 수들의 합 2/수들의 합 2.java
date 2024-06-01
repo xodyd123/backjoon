@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class Main {
+public class Main  {
 
 
     public static void main(String[] args) throws IOException {
@@ -20,29 +20,20 @@ public class Main {
             arr[i] = Integer.parseInt(strings[i]);
         }
 
-        int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > m) {
-                continue;
-            } else if (arr[i] == m) {
-                count++;
-                continue;
-            } else {
-                int num = arr[i];
-                for (int j = i + 1; j < arr.length; j++) {
-                     num += arr[j];
-                    if (num == m) {
-                        count++;
-
-                        break;
-                    } else if (num > m) {
-
-                        break;
-                    }
-
-                }
+        int count = 0 , s = 0 , e = 0 ,sum = 0 ;
+        while (true) {
+            if (sum >= m) {
+                sum -= arr[s++];
+            } else if (e == n) {
+                break;
+            }
+            else {
+                sum += arr[e++];
             }
 
+            if (sum == m) {
+                count ++ ;
+            }
         }
         System.out.println(count);
     }
