@@ -1,37 +1,49 @@
 import java.util.*;
 class Solution {
-    boolean[] bol ;
     int answer ; 
-    
     public int solution(String begin, String target, String[] words) {
-        bol = new boolean[words.length];
-        dfs(begin , target , words , 0);
-
-        return answer ;
-   
-    }
+        boolean[] bol = new boolean[words.length];
+        ArrayDeque<Node> que = new ArrayDeque<>();
+        que.add(new Node(begin , 0));
+        while(!que.isEmpty()){
+            Node node = que.poll();
+            if(node.str.equals(target)){
+                answer = node.num; 
+                break ; 
+            }
+            
+            for(int i = 0 ; i<words.length ; i++){
+                    if(!bol[i] && check(node.str , words[i])){
+                        bol[i] = true ; 
+                        que.add(new Node(words[i] , node.num+1));
+                            
+                        }
+                    }
+                
+            }
+          return answer; 
+            
+        }
+     
     
-    private void dfs(String begin , String target , String[] words , int count){
-        if(begin.equals(target)){
-            answer = count ;
-            return ; 
+    private boolean check(String node , String words){
+        int count = 0 ; 
+        for(int j = 0 ; j<node.length() ; j++){
+            if(node.charAt(j) != words.charAt(j)){
+                count ++ ;
+            }
         }
         
-        for(int i = 0 ; i<words.length; i++){
-            if(bol[i]){
-                continue ; 
-            }
-            int up = 0 ; 
-            for(int j = 0 ; j<words[i].length() ;  j++){
-                if(begin.charAt(j) == words[i].charAt(j)){
-                    up++;
-                }
-            }
-            if(up == words[0].length() -1){
-                bol[i] = true ; 
-                dfs(words[i] , target , words , count+1);
-                bol[i] = false ;
-            }
+        return count == 1 ? true : false ; 
+    }
+    
+    static class Node {
+        String str ;
+        int num ;
+        
+        Node(String str , int num){
+            this.str = str ;
+            this.num = num ; 
         }
     }
     
