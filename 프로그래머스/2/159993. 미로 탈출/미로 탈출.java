@@ -60,20 +60,19 @@ class Solution {
                         continue ;
                     }
                      
-                    if(dist[x][y] >0){
-                        continue;
-                    }
-                    
                     if(map[x][y] == 'X'){
                         continue ;
                     }
                     
-                    dist[x][y] = dist[node.x][node.y]+1 ;
-                    deque.add(new Node(x,y)); 
-                    
+                       
+                    if(dist[x][y] == 0){
+                        dist[x][y] = dist[node.x][node.y]+1 ;
+                        deque.add(new Node(x,y));
+                    }
                     if(x == end.x && y == end.y){
                         return dist[x][y] -1 ;
                     }
+                   
                 }
             }
             return -1 ;
