@@ -1,19 +1,15 @@
 class Solution {
-       public int solution(int[] numbers, int k) {
-
-        int answer = numbers[0];
-        try{
-        for(int i = 1; i<k ;i++){
-            answer += 2;
-            answer %= numbers.length ;
-
+    public int solution(int[] numbers, int k) {
+        int count = 0;
+        int answer = 0;
+        for(int i=0; i<k-1; i++) {
+            count = count + 2;
+            if(count > numbers.length-1) {
+               count =  count - numbers.length;
+            }
+            answer = numbers[count];
         }
-         answer = numbers[answer-1] ;
-        }catch (ArrayIndexOutOfBoundsException e){
-            answer = numbers[numbers.length-1] ;
 
-        }
-        return answer ;
-
+        return answer;
     }
-       }
+}
