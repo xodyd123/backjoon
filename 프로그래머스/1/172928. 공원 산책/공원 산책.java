@@ -1,150 +1,55 @@
+import java.util.*;
+
 class Solution {
-    
-    static Route[] route ;
+    public int[] solution(String[] park, String[] routes) {
+        int m = park.length;
+        int n = park[0].length();
+        int curX = 0;
+        int curY = 0;
+        char[][] grid = new char[m][n];
 
-    static char[][] map;
-
-    Node node ;
-    public int[] solution(String[]park, String[]routes) {
-        map = new char[park.length][park[0].length()];
-        route = new Route[routes.length];
-        int num= 0 ;
-        for (String str : routes) {
-            String[] split = str.split(" ");
-
-            route[num++] = new Route(split[0] , Integer.parseInt(split[1]));
-
-        }
-
-
-        for (int i = 0; i < park.length; i++) {
-            for (int j = 0; j < park[i].length(); j++) {
-                map[i][j] =  park[i].charAt(j);
-            }
-        }
-
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if(map[i][j] == 'S'){
-                    node = new Node(i, j , 0);
-                    break ;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = park[i].charAt(j);
+                if (grid[i][j] == 'S') {
+                    curX = i;
+                    curY = j;
                 }
             }
         }
-        dfs();
-        int[] result = {node.x , node.y};
-        return result;
 
+        int[] dx = { -1, 1, 0, 0 };
+        int[] dy = { 0, 0, -1, 1 };
+        HashMap<Character, Integer> map = new HashMap<>();
+        map.put('N', 0);
+        map.put('S', 1);
+        map.put('W', 2);
+        map.put('E', 3);
 
-    }
+        for (String command : routes) {
 
-    private void dfs() {
-        Node before = node ;
-        for (int i = 0; i < route.length; i++) {
-            if (route[i].direction.equals("E")) {
-                for(int j = 0 ; j<route[i].dict ; j++){
-                    int x_range = before.x  ;
-                    int y_range = before.y +1;
+            char op = command.charAt(0);
+            int move = command.charAt(2) - '0';
 
+            int nextX = curX;
+            int nextY = curY;
+            boolean isOK = true;
+            for (int i = 0; i < move; i++) {
+                nextX += dx[map.get(op)];
+                nextY += dy[map.get(op)];
 
-                    if (x_range < 0 || y_range < 0 || x_range >= map.length || y_range >= map[0].length) {
-                        before = node ;
-                        break;
-                    }
-                    if (map[x_range][y_range] == 'X') {
-                        before = node ;
-                        break;
-                    }
-
-                     before = new Node(x_range, y_range, before.dict + 1);
+                if (nextX < 0 || nextY < 0 || nextX >= m || nextY >= n || grid[nextX][nextY] == 'X') {
+                    isOK = false;
+                    break;
                 }
-                node = before ;
             }
-            else if (route[i].direction.equals("W")) {
-                for(int j = 0 ; j<route[i].dict ; j++){
-                    int x_range = before.x  ;
-                    int y_range = before.y -1;
 
-
-                    if (x_range < 0 || y_range < 0 || x_range >= map.length || y_range >= map[0].length) {
-                        before = node ;
-                        break;
-                    }
-                    if (map[x_range][y_range] == 'X') {
-                        before = node ;
-                        break;
-                    }
-
-                    before = new Node(x_range, y_range, before.dict - 1);
-                }
-                node = before ;
-
-            }else if (route[i].direction.equals("S")) {
-                for(int j = 0 ; j<route[i].dict ; j++){
-                    int x_range = before.x +1 ;
-                    int y_range = before.y  ;
-
-
-                    if (x_range < 0 || y_range < 0 || x_range >= map.length || y_range >= map[0].length) {
-                        before = node ;
-                        break;
-                    }
-                    if (map[x_range][y_range] == 'X') {
-                        before = node ;
-                        break;
-                    }
-
-                    before = new Node(x_range, y_range, before.dict + 1);
-                }
-                node = before ;
-
-
-            }else if (route[i].direction.equals("N")) {
-                for(int j = 0 ; j<route[i].dict ; j++){
-                    int x_range = before.x -1 ;
-                    int y_range = before.y  ;
-
-
-                    if (x_range < 0 || y_range < 0 || x_range >= map.length || y_range >= map[0].length) {
-                        before = node ;
-                        break;
-                    }
-                    if (map[x_range][y_range] == 'X') {
-                        before = node ;
-                        break;
-                    }
-
-                    before = new Node(x_range, y_range, before.dict - 1);
-                }
-                node = before ;
-
-
+            if (isOK) {
+                curX = nextX;
+                curY = nextY;
             }
         }
+
+        return new int[] { curX, curY };
     }
-
-    static class Route{
-        String direction ;
-        int dict ;
-
-        public Route(String direction, int dict) {
-            this.direction = direction;
-            this.dict = dict;
-        }
-    }
-
-    static class Node{
-        int x ;
-        int y ;
-        int dict ;
-
-        public Node(int x, int y, int dict) {
-            this.x = x;
-            this.y = y;
-            this.dict = dict;
-        }
-    }
-
-
 }
-
