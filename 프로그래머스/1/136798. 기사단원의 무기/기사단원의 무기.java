@@ -1,34 +1,20 @@
-public class Solution {
+class Solution {
+
     public int solution(int number, int limit, int power) {
-        int[] arr = new int[number];
+        int[] count = new int[number + 1];    
         for (int i = 1; i <= number; i++) {
-            int divisorCount = 0;
-            boolean withinLimit = true;
-            for (int j = 1; j <= Math.sqrt(i); j++) {
-                if (i % j == 0) {
-                    if (j * j == i) {
-                        divisorCount++;
-                    } else {
-                        divisorCount += 2;
-                    }
-                }
-                if (divisorCount > limit) {
-                    withinLimit = false;
-                    break;
-                }
-            }
-            if (withinLimit) {
-                arr[i - 1] = divisorCount;
-            } else {
-                arr[i - 1] = power;
+            for (int j = 1; j <= number / i; j++) {
+                count[i * j]++;
             }
         }
-
         int answer = 0;
-        for (int i : arr) {
-            answer += i;
+        for (int i = 1; i <= number; i++) {
+            if (count[i] > limit) {
+                answer += power;
+            } else {
+                answer += count[i];
+            }
         }
-
         return answer;
     }
 }
