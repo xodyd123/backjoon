@@ -1,35 +1,19 @@
-import java.util.HashSet;
-import java.util.Set;
 class Solution {
-     public String solution(String s, String skip, int index) {
+    public String solution(String s, String skip, int index) {
+        StringBuilder answer = new StringBuilder();
 
-        Set<Character> set = new HashSet<>();
-        for (Character c : skip.toCharArray()) {
-            set.add(c);
-        }
-        StringBuilder sb = new StringBuilder();
-        for (char ch : s.toCharArray()) {
-            int num = 0 ;
-            while(num<index){
-                ++ch ;
-                if(set.contains(ch)){
-                    continue;
+        for (char letter : s.toCharArray()) {
+            char temp = letter;
+            int idx = 0;
+            while (idx < index) {
+                temp = temp == 'z' ? 'a' : (char) (temp + 1);
+                if (!skip.contains(String.valueOf(temp))) {
+                    idx += 1;
                 }
-                if (ch > 122) {
-                    ch = 'a';
-                    if(set.contains(ch)){
-                        continue;
-                    }
-                    num++;
-                }
-                else {
-                    num++;
-                }
-
             }
-            sb.append(ch);
-
+            answer.append(temp);
         }
-        return sb.toString();
+
+        return answer.toString();
     }
 }
