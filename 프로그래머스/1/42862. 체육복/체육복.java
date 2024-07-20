@@ -1,36 +1,25 @@
-import java.util.*;
 class Solution {
-     public int solution(int n, int[] lost, int[] reserve) {
-        Set<Integer> set = new HashSet<>();
-        Set<Integer> lostSet = new HashSet<>();
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int i : reserve) {
-            set.add(i);
-        }
-        for (int i : lost) {
-            lostSet.add(i);
-            if (set.contains(i)) {
-                set.remove(i);
-                lostSet.remove(i);
-            }
-        }
-        int count = 0 ;
-        int answer = n - lostSet.size();
-        PriorityQueue<Integer> resQueue  = new PriorityQueue<>(set);
-        while (!resQueue.isEmpty()) {
-            Integer poll = resQueue.poll();
-            int back = poll - 1;
-            int front = poll + 1;
-            if(lostSet.contains(back)){
-                lostSet.remove(back);
-                count ++ ;
-            } else if (lostSet.contains(front)) {
-                lostSet.remove(front);
-                count ++ ;
-            }
-        }
-        answer += count ;
-        return answer ;
-    }
+    public int solution(int n, int[] lost, int[] reserve) {
+        int[] people = new int[n];
+        int answer = n;
 
+        for (int l : lost) 
+            people[l-1]--;
+        for (int r : reserve) 
+            people[r-1]++;
+
+        for (int i = 0; i < people.length; i++) {
+            if(people[i] == -1) {
+                if(i-1>=0 && people[i-1] == 1) {
+                    people[i]++;
+                    people[i-1]--;
+                }else if(i+1< people.length && people[i+1] == 1) {
+                    people[i]++;
+                    people[i+1]--;
+                }else 
+                    answer--;
+            }
+        }
+        return answer;
+    }
 }
