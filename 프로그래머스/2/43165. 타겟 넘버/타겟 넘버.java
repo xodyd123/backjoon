@@ -1,30 +1,27 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+
 class Solution {
-    int count ;
-    
+    Queue<Integer> q = new LinkedList<Integer>();
     public int solution(int[] numbers, int target) {
-        dfs(numbers , target , 0 , 0);
-        
-        int answer = count ;
-        
-        return answer;
-        
-    }
-    
-    private void dfs(int[] numbers , int target , int start , int dept){
-        if(numbers.length == start){
-            if(target == dept){
-                count++;
+        int answer = 0;
+        q.offer(0);
+        q.offer(0);
+        while(q.peek()!=null){
+            int level =q.poll();
+            int v = q.poll();
+            if(level==numbers.length){
+                if(v==target)
+                    answer++;
+            }else {
+
+                q.offer(level + 1);
+                q.offer(v + numbers[level]);
+
+                q.offer(level + 1);
+                q.offer(v - numbers[level]);
             }
-            return ; 
         }
-        
-        int plus = dept + numbers[start];
-        int minus = dept - numbers[start];
-        
-        dfs(numbers , target , start+1 , plus);
-        dfs(numbers , target , start+1 , minus);
-    }
-    
-    
+        return answer;
+    }   
 }
