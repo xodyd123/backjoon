@@ -1,65 +1,34 @@
-import java.io.*;
-import java.util.*;
+import java.util.Stack;
+
 class Solution {
-    public int solution(String s) {
-        int count = 0 ;
-        for(int i = 0 ; i<s .length() ; i++ ){
-            while (true) {
-                StringBuilder str  = new StringBuilder();
-                for (int num = i; num < s .length(); num++) {
-                    str.append(s .charAt(num));
-                }
-                if(str.length()<s .length()){
-                   int num =  s .length()-str.length();
-                    for (int j = 0; j < num; j++) {
-                        str.append(s .charAt(j));
-                    }
-                }
-                if(str.length() == s .length()){
-                    boolean bol = stack(str.toString());
-                    if(bol){
-                        count++ ;
-                    }
-                    break;
-                }
+    private final Stack<Character> stack = new Stack<>();
 
+        public int solution(String s) {
+            int answer = 0;
+            StringBuilder stringBuilder = new StringBuilder(s);
 
+            for (int i = 0; i < s.length(); i++) {
+                stringBuilder.append(stringBuilder.charAt(0));
+                stringBuilder.deleteCharAt(0);
+                if (correctParenthesis(stringBuilder.toString().toCharArray()))
+                    answer++;
             }
-
+            return answer;
         }
-        return count;
-    }
-    private static boolean stack(String str){
-        Stack<Character> stack = new Stack<>();
-        for(char ch : str.toCharArray()){
-            if(ch == '[' || ch == '(' || ch== '{' ){
-                stack.push(ch);
+
+        private boolean correctParenthesis(char[] s) {
+            for (char c : s) {
+                if (!(check(c, '(', ')') && check(c, '[', ']') && check(c, '{', '}')))
+                    return false;
             }
-
-            if (stack.empty() && (ch == ']' || ch == '}' || ch == ')')) {
-                return false ;
-            }
-
-            if (!stack.isEmpty()) {
-                if(stack.peek() == '[' && ch == ']'){
-                    stack.pop();
-                }
-                else if(stack.peek() == '(' && ch == ')'){
-                    stack.pop();
-                }
-                else if(stack.peek() == '{' && ch == '}'){
-                    stack.pop();
-                }
-            }
-
+            return stack.isEmpty();
         }
-        if(stack.empty()){
-            return true ;
-        }
-        else {
-            return false;
-        }
-    }
 
-
+        private boolean check(char c, char a, char b) {
+            if (c == a)
+                stack.push(a);
+            else if (c == b)
+                if (!stack.isEmpty() && stack.peek() == a) stack.pop(); else return false;
+            return true;
+        }
 }
