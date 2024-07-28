@@ -30,9 +30,7 @@ class Solution {
            
             return -1 ; 
         }
-        else if(queue.size() == 1 && queue.poll() >= K){
-            return answer ;
-        }
+  
       
         
         return answer ; 
