@@ -1,6 +1,9 @@
+
 function solution(n) {
-    str = "수박" ; 
-    strs = str.repeat(5000) ; 
-    
-    return strs.substring(0 , n); 
+    var answer = '';
+    for(let i=1;i<=n/2; i++){
+        answer = answer + '수박'
+    }
+    n%2==1? answer = answer + '수' : answer;
+    return answer;
 }

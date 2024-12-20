@@ -1,10 +1,10 @@
 # [level 1] 수박수박수박수박수박수? - 12922 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12922?language=javascript) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12922) 
 
 ### 성능 요약
 
-메모리: 33.6 MB, 시간: 0.08 ms
+메모리: 33.9 MB, 시간: 0.30 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 21일 01:47:57
+2024년 12월 21일 01:49:18
 
 ### 문제 설명
 
