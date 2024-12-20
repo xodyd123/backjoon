@@ -1,16 +1,10 @@
 function solution(n) {
     let answer =""
     str = String(n) ; 
-    const arr = Array.from(str , num => Number(num)); 
-    for (let i = 9; i >= 0; i--) {
-    let index = arr.indexOf(i); // 값의 인덱스를 찾음
-    while (index !== -1) {
-        answer += String(i); // 문자열로 추가
-        arr.splice(index, 1); // 해당 요소 제거
-        index = arr.indexOf(i); // 다음 인덱스 찾기
-    }
-}
-
+    const arr = Array.from(str , num => Number(num));
+    arr.sort((a1 ,a2) => a2-a1>0 ? 1: -1); 
+    console.log(arr)
+    arr.forEach(num => answer += num); 
     return Number(answer);
 }
 
