@@ -1,7 +1,8 @@
 function solution(arr) {
     var answer = 0;
-    arr.forEach(num => {answer += num;});
+    answer = arr.reduce((start , current , index , {length}) => {
+       return index === length-1 ? (start + current) / length : start+current ;
+    })
     
-    answer = answer / arr.length ;
     return answer;
 }
