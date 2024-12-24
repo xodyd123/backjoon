@@ -16,7 +16,7 @@ function check(array , num){
     
     num1 > num2 ? (num4 = num1 , num1 = num2 , num2 = num4) : num1 ;  
     
-    let newArr = array.slice(num1-1 , num2).sort((result1 , result2) => result1 - result2  ); 
+    let newArr = array.slice(num1-1 , num2).sort((result1 , result2) => result1 > result2 ? 1 : -1  ); 
  
     return newArr[num3-1] ; 
 }
