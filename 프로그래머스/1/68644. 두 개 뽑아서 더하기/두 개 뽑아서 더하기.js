@@ -1,13 +1,13 @@
 function solution(numbers) {
-    var answer = [];
-    
-    numbers.forEach((item1 ,index1 ,arr) => {
-        arr.forEach((item2 ,index2) =>{
-            index1 !== index2 ? answer = [...answer , item1+item2] : [...answer] ;  
-        })
-    });
-    
-    answer = [...new Set(answer)] 
-    answer.sort((num1 , num2) => num1 > num2 ? 1 : -1); 
-    return answer;
+    const temp = []
+
+    for (let i = 0; i < numbers.length; i++) {
+        for (let j = i + 1; j < numbers.length; j++) {
+            temp.push(numbers[i] + numbers[j])
+        }
+    }
+
+    const answer = [...new Set(temp)]
+
+    return answer.sort((a, b) => a - b)
 }
