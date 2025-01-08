@@ -8,12 +8,12 @@ function solution(answers) {
         result.push(check(answers , num))
     }
     let max = Math.max(...result);
-    result =  result.map((item , index) => {
-        if(item === max) return index+1 ; 
-    }); 
+    let final = [];
+    for(let i = 0 ; i<result.length ; i++){
+       if(result[i]===max) final.push(i+1);
+    }
     
-    return result.filter(item => {
-        return item !== undefined}); 
+    return final ;
 }
 
 function check(answers , arr){
