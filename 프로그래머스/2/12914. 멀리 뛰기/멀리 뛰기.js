@@ -1,18 +1,10 @@
 function solution(n) {
-    const MOD = 1234567;
-    if (n === 1) return 1;
-    if (n === 2) return 2;
-
-    let prev1 = 1; // dp[1]
-    let prev2 = 2; // dp[2]
-    let current = 0;
-
-    for (let i = 3; i <= n; i++) {
-        current = (prev1 + prev2) % MOD; // dp[n] = dp[n-1] + dp[n-2]
-        prev1 = prev2;
-        prev2 = current;
-    }
-
-    return current;
+    var answer = 0;
+    var dp=[];
+    dp[1]=1;
+    dp[2]=2;
+    for(var i=3;i<=n;i++){
+        dp[i]=dp[i-1]+dp[i-2] %1234567 ;}
+    answer=dp[n];
+    return answer%1234567;
 }
-
