@@ -1,31 +1,14 @@
-let count = 0 ; 
-
 function solution(numbers, target) {
-    var answer = 0;
-    
-    dfs(answer , 0 , numbers.length , numbers , target ,count) ;
-    
- 
-    return count ; 
-    
-    
-}
-
-
-function dfs(answer , start , end , numbers , target){
-    if(start === end) {
-      
-        if(answer === target) {
-            count ++ ;
+    let queue = [0]; // 시작점은 0
+    for (let num of numbers) {
+        let nextQueue = [];
+        for (let current of queue) {
+            nextQueue.push(current + num); // 더하기 경우
+            nextQueue.push(current - num); // 빼기 경우
         }
-        return ; 
-        
-    } 
-    
-    start ++ ; 
-    
-    dfs(answer+numbers[start-1] , start , end , numbers , target) ; 
-    
-    dfs(answer-numbers[start-1] , start , end , numbers , target) ; 
-    
+        queue = nextQueue; // 다음 단계로 이동
+    }
+
+    // 최종 결과 중 target과 같은 값의 개수를 세기
+    return queue.filter((value) => value === target).length;
 }
