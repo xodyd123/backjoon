@@ -1,10 +1,10 @@
 # [level 2] H-Index - 42747 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42747) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42747?language=java) 
 
 ### 성능 요약
 
-메모리: 36.6 MB, 시간: 227.04 ms
+메모리: 84.2 MB, 시간: 16.09 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 01일 21:04:48
+2025년 02월 05일 14:34:26
 
 ### 문제 설명
 
