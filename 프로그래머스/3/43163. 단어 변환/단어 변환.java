@@ -1,51 +1,61 @@
-import java.util.*;
+import java.util.*; 
 class Solution {
-    int answer ; 
     public int solution(String begin, String target, String[] words) {
-        boolean[] bol = new boolean[words.length];
-        ArrayDeque<Node> que = new ArrayDeque<>();
-        que.add(new Node(begin , 0));
-        while(!que.isEmpty()){
-            Node node = que.poll();
-            if(node.str.equals(target)){
-                answer = node.num; 
+        ArrayDeque<Node> deque = new ArrayDeque<>(); 
+        boolean[] bol = new boolean[words.length] ; 
+        Node node = new Node(begin , 0);
+        deque.add(node) ; 
+        int answer = 0 ; 
+        while(!deque.isEmpty()){
+            Node poll = deque.poll() ;
+            if(poll.str.equals(target)) {
+                answer = poll.dict ; 
                 break ; 
             }
             
             for(int i = 0 ; i<words.length ; i++){
-                    if(!bol[i] && check(node.str , words[i])){
-                        bol[i] = true ; 
-                        que.add(new Node(words[i] , node.num+1));
-                            
-                        }
-                    }
+                if(!check(poll.str , words[i])) {
+                    continue ; 
+                }
+                if(bol[i]){
+                    continue ; 
+                } 
+                bol[i] = true ; 
+                deque.add(new Node(words[i] , poll.dict+1));
                 
             }
-          return answer; 
-            
-        }
-     
-    
-    private boolean check(String node , String words){
-        int count = 0 ; 
-        for(int j = 0 ; j<node.length() ; j++){
-            if(node.charAt(j) != words.charAt(j)){
-                count ++ ;
+  
             }
+            System.out.println(Arrays.toString(bol)); 
+            return answer;
         }
         
-        return count == 1 ? true : false ; 
+    
+    
+    
+    public boolean check(String poll , String target){
+        int num = 0 ;
+        
+        for(int i = 0 ; i<poll.length() ; i++){
+            if(poll.charAt(i) != target.charAt(i)) {
+                num++ ; 
+            }
+           
+        }
+        if(num == 1) {
+            return true ;
+        }
+        
+        return false ; 
     }
     
     static class Node {
         String str ;
-        int num ;
+        int dict ; 
         
-        Node(String str , int num){
+        Node(String str , int dice){
             this.str = str ;
-            this.num = num ; 
+            this.dict = dice ; 
         }
     }
-    
-    
 }
