@@ -1,60 +1,58 @@
 import java.util.*;
-
 class Solution {
-    int[] x_dict = {-1, 1, 0, 0};
-    int[] y_dict = {0, 0, -1, 1};
-    int x_range;
-    int y_range;
-    int[][] dict;
-
     public int solution(int[][] maps) {
-        y_range = maps.length;
-        x_range = maps[0].length;
-        dict = new int[y_range][x_range];
-        dict[0][0] = 1;
-        bfs(new Node(0, 0), maps);
-
-        // 목표 지점이 도달 가능하지 않은 경우 -1 반환
-        if (dict[y_range - 1][x_range - 1] == 0) {
-            return -1;
-        }
-
-        return dict[y_range - 1][x_range - 1];
-    }
-
-    private void bfs(Node node, int[][] maps) {
-        ArrayDeque<Node> queue = new ArrayDeque<>();
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            Node poll = queue.poll();
-
-            for (int i = 0; i < 4; i++) {
-                int nr = poll.r + x_dict[i];
-                int nc = poll.c + y_dict[i];
-
-                if (nc >= x_range || nr >= y_range || nc < 0 || nr < 0) {
-                    continue;
-                }
-                if (maps[nr][nc] == 0) {
-                    continue;
-                }
-
-                if (dict[nr][nc] == 0) {
-                    dict[nr][nc] = dict[poll.r][poll.c] + 1;
-                    queue.add(new Node(nr, nc));
-                }
+        int answer = 0;
+        int[] x = {0,0 ,1 ,-1} ;
+        int[] y = {1,-1 ,0 ,0} ; 
+        int max_x = maps[0].length ; 
+        int max_y = maps.length ; 
+        int[][] dict = new int[max_y][max_x] ;
+        dict[0][0] = 1 ; 
+        
+        Node node = new Node(0,0) ; 
+        
+        ArrayDeque<Node> que = new ArrayDeque<>() ; 
+        que.add(node) ;
+        
+        while(!que.isEmpty()){
+            Node poll = que.poll() ; 
+         
+            for(int i = 0 ; i<4 ; i++){
+                int dict_x = poll.x + x[i] ;
+                int dict_y = poll.y + y[i] ; 
+               
+            
+            if(dict_x < 0 || dict_y < 0 || dict_x >= max_x || dict_y >= max_y){
+                continue ;
             }
+                
+            if(maps[dict_y][dict_x] == 0) {
+                continue ; 
+            }
+            
+            if(dict[dict_y][dict_x] == 0) {
+                  dict[dict_y][dict_x] = dict[poll.y][poll.x] + 1 ; 
+                  que.add(new Node(dict_x , dict_y)) ; 
+            }
+         }
+            
+          
+             
         }
+         
+     
+         if(dict[max_y-1][max_x-1]==0) return -1 ;
+          
+          return dict[max_y-1][max_x-1] ;  
     }
-
+    
     static class Node {
-        int r;
-        int c;
-
-        Node(int r, int c) {
-            this.r = r;
-            this.c = c;
+        
+        int x ,y ;
+        
+        Node(int x, int y){
+            this.x = x ;
+            this.y = y ;
         }
     }
 }
-
