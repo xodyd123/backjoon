@@ -17,7 +17,7 @@ class Solution {
             for(int j = 0 ; j<computers[i].length ; j++){
                 if(computers[i][j] == 1){
                     arr[i].add(j);
-                    arr[j].add(i); 
+                    //arr[j].add(i); 
                 }
             }
         }
