@@ -1,32 +1,31 @@
 import java.util.*;
-
 class Solution {
-    private Map<String, PriorityQueue<String>> graph = new HashMap<>();
-    private List<String> result = new ArrayList<>();
-
+    private Map<String , PriorityQueue<String>> map = new HashMap<>(); 
+    private List<String> result = new ArrayList<>(); 
     public String[] solution(String[][] tickets) {
-        // 그래프 초기화 (사전순 탐색을 위해 PriorityQueue 사용)
-        for (String[] ticket : tickets) {
-            graph.putIfAbsent(ticket[0], new PriorityQueue<>());
-            graph.get(ticket[0]).add(ticket[1]);
+        String[] answer = {};
+       
+        
+        for(int i = 0 ; i<tickets.length ; i++){
+            if(map.containsKey(tickets[i][0])){
+                map.get(tickets[i][0]).add(tickets[i][1]) ; 
+            }
+            else {
+                map.put(tickets[i][0] , new PriorityQueue<String>());
+                map.get(tickets[i][0]).add(tickets[i][1]) ; 
+            }
         }
-
-        // DFS 실행
-        dfs("ICN");
-
-        // 결과를 역순으로 변환
-        Collections.reverse(result);
-        return result.toArray(new String[0]);
+       
+        dfs("ICN") ; 
+         Collections.reverse(result);  
+        
+        return result.stream().toArray(String[]::new) ;
     }
-
-    private void dfs(String airport) {
-        // 사전순으로 탐색하기 위해 우선순위 큐 사용
-        while (graph.containsKey(airport) && !graph.get(airport).isEmpty()) {
-            dfs(graph.get(airport).poll());
+    
+    private void dfs(String str){
+        while(map.containsKey(str) && !map.get(str).isEmpty()){
+            dfs(map.get(str).poll()); 
         }
-        // 역순으로 경로 추가
-        result.add(airport);
+        result.add(str) ; 
     }
 }
-
-
