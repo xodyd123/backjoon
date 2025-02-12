@@ -23,15 +23,8 @@ class Solution {
         bfs(); 
         Collections.sort(result, Collections.reverseOrder()) ;
         int max = result.get(0); 
-        int count = 0 ; 
-        for(int num : result){
-            if(max == num){
-                count ++ ; 
-            }
-        }
-        
        
-        return count ; 
+        return (int)result.stream().filter(item -> item == max).count();
     }
     
     private void bfs(){
