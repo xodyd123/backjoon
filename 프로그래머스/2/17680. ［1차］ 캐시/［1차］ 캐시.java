@@ -1,41 +1,42 @@
-import java.util.*; 
+import java.util.*;
+
 class Solution {
     public int solution(int cacheSize, String[] cities) {
-        if (cacheSize == 0) return cities.length * 5; // 캐시 크기가 0이면 바로 반환
-        
-        Db db = new Db(cacheSize);
-        for (String str : cities) {
-            db.add(str.toLowerCase());
+        if (cacheSize == 0) return cities.length * 5;
+
+        LRUCache cache = new LRUCache(cacheSize);
+        for (String city : cities) {
+            cache.access(city.toLowerCase());
         }
 
-        return db.time;
+        return cache.getTime();
     }
 
-    static class Db {
-        Queue<String> deque = new LinkedList<>();
-        int time;
-        int size;
+    static class LRUCache extends LinkedHashMap<String, Integer> {
+        private final int capacity;
+        private int time = 0;
 
-        Db(int size) {
-            this.size = size;
+        public LRUCache(int capacity) {
+            super(capacity, 0.75f, true); // LRU 정책 활성화
+            this.capacity = capacity;
         }
 
-        private void add(String str) {
-            if (check(str)) {
-                deque.remove(str);
-                deque.add(str);
-                time += 1;
+        void access(String city) {
+            if (super.containsKey(city)) {
+                time += 1; // Cache Hit
             } else {
-                if (deque.size() >= size) {
-                    deque.poll();
+                if (super.size() >= capacity) {
+                    Iterator<String> it = super.keySet().iterator();
+                    it.next();
+                    it.remove(); // LRU 요소 제거
                 }
-                deque.add(str);
-                time += 5;
+                time += 5; // Cache Miss
             }
+            super.put(city, 0); // 최신 요소로 갱신
         }
 
-        private boolean check(String str) {
-            return deque.contains(str);
+        int getTime() {
+            return time;
         }
     }
 }
