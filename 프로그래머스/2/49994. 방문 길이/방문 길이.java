@@ -13,7 +13,7 @@ class Solution {
         }
         return node.dict; // 방문한 길의 개수 반환
     }
-    
+
     static class Node {
         int x = 0;
         int y = 0;
@@ -30,8 +30,8 @@ class Solution {
             }
 
             // 길을 고유하게 저장하기 위해 (x, y) → (nx, ny)와 반대 방향도 고려
-            String road = Math.min(this.x, next_x) + "," + Math.min(this.y, next_y) + "-" +
-                          Math.max(this.x, next_x) + "," + Math.max(this.y, next_y);
+            String road = Math.min(this.x, next_x) + "" + Math.min(this.y, next_y) +
+                          Math.max(this.x, next_x)  + Math.max(this.y, next_y);
 
             // 처음 방문한 길이면 count 증가
             if (!set.contains(road)) {
