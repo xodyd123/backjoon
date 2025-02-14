@@ -12,13 +12,7 @@ class Solution {
                 }
               
             }
-            if(count == 0) {
-                answer[i] = 1 ; 
-            }
-             
-            else {
-                answer[i] = count ;
-             }
+            answer[i] = count ; 
             
         }
         
