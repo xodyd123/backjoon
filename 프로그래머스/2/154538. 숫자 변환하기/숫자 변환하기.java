@@ -1,63 +1,18 @@
-import java.util.*; 
+import java.util.*;
+
 class Solution {
-    ArrayDeque<Node> que = new ArrayDeque<>() ; 
-    int n ; 
-    int y ; 
-    boolean[] bol ; 
+
+    int[] dp = new int[3_000_000];
+    int INF = 1000002;
+
     public int solution(int x, int y, int n) {
-        this.n = n ; 
-        this.y = y ;
-        this.bol = new boolean[y+1] ; 
-        
-        que.add(new Node(x , 0)); 
-        return dfs();
-    }
-    
-    public int dfs(){
-        while(!que.isEmpty()){
-            Node node = que.poll() ;
-            int x = node.x ;
-            int count = node.count ; 
-            
-            if(x == this.y){
-                  return count ; 
-                }
-            
-            for(int i = 0 ; i<3 ; i++){
-                int new_x = x ; 
-               if(i == 0){
-                   new_x += this.n;
-                   
-               }else if(i== 1) {
-                   new_x *= 2  ; 
-               }
-                else{
-                   new_x *= 3 ; 
-                }
-                
-                if(new_x>this.y){
-                    continue ; 
-                }
-                
-                if(this.bol[new_x]){
-                    continue ; 
-                }
-                
-                bol[new_x] = true ; 
-                int new_count = count+1 ; 
-                que.add(new Node(new_x , new_count)) ;   
-            }  
+        int answer = 0;
+        Arrays.fill(dp, INF);
+        dp[x] = -1;
+        dp[y] = 0;
+        for(int num = Math.max(y - n, Math.max(y / 2, y / 3)); num >= x; num--){
+            dp[num] = Math.min(dp[num + n] + 1, Math.min(dp[num * 2] + 1, dp[num * 3] + 1));
         }
-           return -1 ; 
-    }
-    
-    static class Node{
-        int x ;
-        int count ; 
-        
-        Node(int x , int count){
-            this.x = x ;
-            this.count = count ; 
-        }
+        return dp[x] >= INF ? -1 : dp[x];
     }
 }
