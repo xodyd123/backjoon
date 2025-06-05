@@ -1,10 +1,10 @@
 # [level 0] 가까운 수 - 120890 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120890?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120890?language=javascript) 
 
 ### 성능 요약
 
-메모리: 82.9 MB, 시간: 0.50 ms
+메모리: 33.5 MB, 시간: 4.24 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 06월 05일 13:59:21
+2025년 06월 05일 14:14:48
 
 ### 문제 설명
 
