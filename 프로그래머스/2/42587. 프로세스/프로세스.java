@@ -1,65 +1,50 @@
-import java.util.*;
-import java.io.*;
+import java.util.* ;
 class Solution {
     public int solution(int[] priorities, int location) {
-          List<Integer>list =new ArrayList<>();
-
-        PriorityQueue<queue> pq = new PriorityQueue<>(new Comparator<queue>() {
-            @Override
-            public int compare(queue o1, queue o2) {
-              if(o2.num > o1.num){
-                  return 1 ;
-              }
-              return -1 ;
-            }
-        });
-
-        ArrayDeque<queue> deque = new ArrayDeque<>();
-
-        for (int i = 0; i < priorities.length; i++) {
-            pq.add(new queue(i , priorities[i]));
-            deque.add(new queue(i , priorities[i]));
+     
+        Obj[] obj = new Obj[priorities.length] ; 
+        for(int i = 0 ; i<priorities.length ; i++){
+            obj[i] = new Obj(i ,  priorities[i]); 
         }
-        
-        while (!pq.isEmpty()) {
-            queue peek = pq.peek();
-            queue poll2 = deque.poll();
-
-            if(peek.num == poll2.num){
-                list.add(poll2.idx);
-                pq.poll();
+        PriorityQueue<Obj> que = new PriorityQueue<>((a, b) -> b.num - a.num); 
+        ArrayDeque<Obj> deque = new ArrayDeque<>() ; 
+        for(Obj o : obj){
+            que.add(o) ;
+            deque.add(o); 
+        }
+    
+        List<Integer> list = new ArrayList<>() ; 
+        while(!que.isEmpty()){
+            Obj o1 = que.peek();
+            Obj o2 = deque.poll();
+            if(o1.num == o2.num){
+                list.add(o2.index)  ;
+                 que.poll() ;
             }
             else{
-                deque.add(poll2);
+                deque.add(o2); 
             }
-
           
-        }
-        int result = 0 ;
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i) == location){
-                result = i+1;
+
+        }      
+        int answer = 0 ; 
+        for(int i = 0  ;i<list.size() ; i++){
+            if(location == list.get(i)){
+                answer = i+1 ;
                 break;
             }
-           
         }
-        return result;
-
-
-
-
-    }
-
-    static class queue {
-        int idx ;
-        int num ;
-
-        public queue(int idx, int num) {
-            this.idx = idx;
-            this.num = num;
+       
+        return answer ;
+    }     
+    static class Obj {
+        
+        int index ; 
+        int num ; 
+        
+        Obj(int index , int num){
+            this.index = index ; 
+            this.num = num ; 
         }
     }
-
-
 }
-
