@@ -3,80 +3,72 @@ import java.util.*;
 
 public class Main {
     static int N, M;
-    static char[][] board;
-
-    // 방향: 오른쪽, 아래
-    static int[] dx = {0, 1};
-    static int[] dy = {1, 0};
+    static String[][] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
 
-        board = new char[N][M];
+        String[] nm = br.readLine().split(" ");
+        N = Integer.parseInt(nm[0]);
+        M = Integer.parseInt(nm[1]);
+
+        arr = new String[N][M];
         for (int i = 0; i < N; i++) {
-            board[i] = br.readLine().toCharArray();
+            arr[i] = br.readLine().split("");
         }
 
-        int minRepaint = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
 
-        // 모든 가능한 8x8 부분 탐색
+        // 가능한 모든 8x8 영역에 대해 검사
         for (int i = 0; i <= N - 8; i++) {
             for (int j = 0; j <= M - 8; j++) {
-                int repaintW = bfs(i, j, 'W');
-                int repaintB = bfs(i, j, 'B');
-                minRepaint = Math.min(minRepaint, Math.min(repaintW, repaintB));
+                min = Math.min(min, bfs(i, j, "W")); // W로 시작
+                min = Math.min(min, bfs(i, j, "B")); // B로 시작
             }
         }
 
-        System.out.println(minRepaint);
+        System.out.println(min);
     }
 
-    // BFS로 8x8 체스판 검사
-    static int bfs(int startX, int startY, char startColor) {
-        boolean[][] visited = new boolean[8][8];
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
-        visited[0][0] = true;
+    // BFS로 8x8 영역 내 올바른 색 비교
+    static int bfs(int startX, int startY, String startColor) {
+        ArrayDeque<Node> deque = new ArrayDeque<>();
+        deque.add(new Node(0, 0, startColor));
 
         int repaint = 0;
 
-        while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int x = cur[0];
-            int y = cur[1];
+        while (!deque.isEmpty()) {
+            Node cur = deque.poll();
+            int x = cur.x;
+            int y = cur.y;
 
-            // 현재 보드 위치
-            char expected = getExpectedColor(x, y, startColor);
-            char actual = board[startX + x][startY + y];
+            if (x >= 8 || y >= 8) continue;
 
-            if (actual != expected) {
+            int boardX = startX + x;
+            int boardY = startY + y;
+
+            String expectedColor = ((x + y) % 2 == 0) ? startColor : (startColor.equals("W") ? "B" : "W");
+
+            if (!arr[boardX][boardY].equals(expectedColor)) {
                 repaint++;
             }
 
-            for (int d = 0; d < 2; d++) { // 오른쪽, 아래로만 이동
-                int nx = x + dx[d];
-                int ny = y + dy[d];
-
-                if (nx < 8 && ny < 8 && !visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    queue.offer(new int[]{nx, ny});
-                }
-            }
+            // 오른쪽, 아래로만 확장 (중복 없이 8x8)
+            if (x + 1 < 8) deque.add(new Node(x + 1, y, ""));
+            if (y + 1 < 8 && x == 0) deque.add(new Node(x, y + 1, ""));
         }
 
         return repaint;
     }
 
-    // (i + j) % 2 를 이용해 체스판에서 예상 색 구하기
-    static char getExpectedColor(int i, int j, char startColor) {
-        if ((i + j) % 2 == 0) {
-            return startColor;
-        } else {
-            return startColor == 'W' ? 'B' : 'W';
+    static class Node {
+        int x, y;
+        String expected;
+
+        public Node(int x, int y, String expected) {
+            this.x = x;
+            this.y = y;
+            this.expected = expected;
         }
     }
 }
