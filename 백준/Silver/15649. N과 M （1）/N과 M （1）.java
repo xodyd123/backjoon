@@ -1,41 +1,42 @@
 import java.io.*;
-import java.util.*;
-
+import java.util.Arrays;
 public class Main {
-     private static int[] arr ;
-     private static boolean[] bol;
-
+    static int num ;
+    static int count ;
+    static boolean[] bol ;
+    static int[] arr ;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(bf.readLine());
-        int maxNum = Integer.parseInt(st.nextToken());
-        int count = Integer.parseInt(st.nextToken());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s = br.readLine().split(" ");
+        num = Integer.parseInt(s[0]);
+        count = Integer.parseInt(s[1]);
         arr = new int[count];
-        bol = new boolean[maxNum];
-        backTracking(maxNum , count ,  0);
-
-
+        bol = new boolean[num+1];
+        solve(0 );
 
     }
 
-    public static void backTracking(int maxNum ,int count , int range) {
-        if(count==range){
+
+    public static void solve(int start ) {
+
+        if(start == count) {
             for (int i : arr) {
-                System.out.print(i + " ");
+                System.out.print(i +" ");
             }
             System.out.println();
             return;
         }
-        for(int i = 0 ; i<maxNum ; i++){
-            if(!bol[i]){
-                arr[range] = i+1 ;
-                bol[i] = true ;
-                backTracking(maxNum , count , range+1);
+
+        for(int i = 1 ; i <= num ; i++) {
+            if(!bol[i]) {
+                bol[i] = true;
+                arr[start] = i ;
+                solve(start+1);
                 bol[i] = false;
             }
-        }
+            
+            }
 
         }
-
-}
+ }
