@@ -1,10 +1,9 @@
 function solution(n) {
-    let answer =""
-    str = String(n) ; 
-    const arr = Array.from(str , num => Number(num));
-    arr.sort((a1 ,a2) => a2-a1>0 ? 1: -1); 
-    console.log(arr)
-    arr.forEach(num => answer += num); 
-    return Number(answer);
+    var answer = 0;
+    const str = [...String(n)];
+    
+    let results = str.map(item => Number(item));
+    results = results.sort((item1 , item2) => item2 - item1) ; 
+    results = results.reduce((first , cur) => first + cur ,"")
+    return Number(results); 
 }
-
